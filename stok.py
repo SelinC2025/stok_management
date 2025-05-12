@@ -21,7 +21,7 @@ class Urun:
         return False
 
     def urun_bilgilerini_getir(self):
-        return f"\u00dcr\u00fcn ID: {self.urun_id}\n\u00dcr\u00fcn Ad\u0131: {self.urun_adi}\nFiyat: {self.fiyat}\nStok Adedi: {self.stok_adedi}"
+        return f"Urun ID: {self.urun_id}\nUrun Adi: {self.urun_adi}\nFiyat: {self.fiyat}\nStok Adedi: {self.stok_adedi}"
 
     def to_dict(self):
         return {
@@ -67,7 +67,7 @@ class StokYonetimi(QDialog):
                 urun_listesi = json.load(f)
                 return [Urun(**urun) for urun in urun_listesi]
         except FileNotFoundError:
-            QMessageBox.critical(self, "Hata", "\u00dcr\u00fcnler dosyas\u0131 bulunamad\u0131.")
+            QMessageBox.critical(self, "Hata", "Urunler dosyasi bulunamadi.")
             return []
 
     def urunleri_kaydet(self):
@@ -97,10 +97,10 @@ class StokYonetimi(QDialog):
             if radio.isChecked():
                 urun = self.get_urun_by_id(urun_id)
                 if urun:
-                    QMessageBox.information(self, "\u00dcr\u00fcn Bilgisi", urun.urun_bilgilerini_getir())
+                    QMessageBox.information(self, "Urun Bilgisi", urun.urun_bilgilerini_getir())
                     return
 
-        QMessageBox.warning(self, "Uyar\u0131", "L\u00fctfen bir \u00fcr\u00fcn se\u00e7iniz.")
+        QMessageBox.warning(self, "Uyari", "Lutfen bir urun seciniz.")
 
     def siparis_olustur(self):
         siparis_id = self.sip_bos.text()
@@ -123,7 +123,7 @@ class StokYonetimi(QDialog):
                             siparisler = []
 
                         if any(s["siparis_id"] == siparis_id for s in siparisler):
-                            QMessageBox.warning(self, "Hata", f"{siparis_id} ID'li sipari\u015f zaten mevcut.")
+                            QMessageBox.warning(self, "Hata", f"{siparis_id} ID'li siparis zaten mevcut.")
                             return
 
                         siparis = Siparis(siparis_id, urun, adet)
@@ -134,16 +134,16 @@ class StokYonetimi(QDialog):
                         with open(SIPARISLER_DOSYASI, "w") as f:
                             json.dump(siparisler, f, indent=4)
 
-                        QMessageBox.information(self, "Sipari\u015f Ba\u015far\u0131l\u0131",
-                                                f"Sipari\u015finiz ba\u015far\u0131yla olu\u015fturuldu.\nToplam Fiyat: {siparis.toplam_fiyat()} TL")
+                        QMessageBox.information(self, "Siparis basarili",
+                                                f"Siparisiniz basariyla olusturuldu.\nToplam Fiyat: {siparis.toplam_fiyat()} TL")
                     else:
-                        QMessageBox.warning(self, "Hata", "Yeterli stok miktar\u0131 yoktur.")
+                        QMessageBox.warning(self, "Hata", "Yeterli stok miktari yoktur.")
                 else:
-                    QMessageBox.warning(self, "Hata", "Girdi\u011finiz ID'ye sahip \u00fcr\u00fcn yoktur.")
+                    QMessageBox.warning(self, "Hata", "Girdiginiz ID'ye sahip urun yoktur.")
             else:
-                QMessageBox.warning(self, "Hata", "Girdi\u011finiz bilgilerin sadece rakamlardan olu\u015fmas\u0131 gerekmektedir.")
+                QMessageBox.warning(self, "Hata", "Girdiginiz bilgilerin sadece rakamlardan olusması gerekmektedir.")
         else:
-            QMessageBox.warning(self, "Hata", "L\u00fctfen t\u00fcm bilgileri eksiksiz giriniz.")
+            QMessageBox.warning(self, "Hata", "Lutfen tum bilgileri eksiksiz giriniz.")
 
     def fiyat_hesapla(self):
         urun_id = self.urun_bos.text()
@@ -156,20 +156,20 @@ class StokYonetimi(QDialog):
                 toplam_fiyat = urun.fiyat * adet
                 QMessageBox.information(self, "Toplam Fiyat", f"Toplam Fiyat: {toplam_fiyat} TL")
             else:
-                QMessageBox.warning(self, "Hata", "Girdi\u011finiz ID'ye sahip \u00fcr\u00fcn yoktur.")
+                QMessageBox.warning(self, "Hata", "Girdiginiz ID'ye sahip urun yoktur.")
         else:
-            QMessageBox.warning(self, "Hata", "Girdi\u011finiz bilgilerin sadece rakamlardan olu\u015fmas\u0131 gerekmektedir.")
+            QMessageBox.warning(self, "Hata", "Girdiginiz bilgilerin sadece rakamlardan olusması gerekmektedir.")
 
     def stok_guncelleme(self):
         urun_id_text = self.urun_id.text()
         yeni_adet_text = self.stok_guncelle.text()
 
         if not urun_id_text or not yeni_adet_text:
-            QMessageBox.warning(self, "Hata", "L\u00fctfen \u00fcr\u00fcn ID ve yeni stok adetini giriniz.")
+            QMessageBox.warning(self, "Hata", "Lutfen urun ID ve yeni stok adetini giriniz.")
             return
 
         if not urun_id_text.isdigit() or not yeni_adet_text.isdigit():
-            QMessageBox.warning(self, "Hata", "\u00dcr\u00fcn ID ve stok adedi sadece rakamlardan olu\u015fmal\u0131d\u0131r.")
+            QMessageBox.warning(self, "Hata", "Urun ID ve stok adedi sadece rakamlardan olusmalidir.")
             return
 
         urun_id = int(urun_id_text)
@@ -179,9 +179,9 @@ class StokYonetimi(QDialog):
         if urun:
             urun.stok_adedi = yeni_adet
             self.urunleri_kaydet()
-            QMessageBox.information(self, "Stok G\u00fcncelleme", f"Stok ba\u015far\u0131yla g\u00fcncellendi.\nYeni stok: {urun.stok_adedi}")
+            QMessageBox.information(self, "Stok Guncelleme", f"Stok basariyla guncellendi.\nYeni stok: {urun.stok_adedi}")
         else:
-            QMessageBox.warning(self, "Hata", "Girdi\u011finiz ID'ye sahip \u00fcr\u00fcn bulunamad\u0131.")
+            QMessageBox.warning(self, "Hata", "Girdiginiz ID'ye sahip urun bulunamadi.")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
