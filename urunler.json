@@ -1,0 +1,56 @@
+[
+    {
+        "urun_id": 101,
+        "urun_adi": "Televizyon",
+        "fiyat": 3000,
+        "stok_adedi": 7
+    },
+    {
+        "urun_id": 102,
+        "urun_adi": "Bilgisayar",
+        "fiyat": 5000,
+        "stok_adedi": 0
+    },
+    {
+        "urun_id": 103,
+        "urun_adi": "Tablet",
+        "fiyat": 1500,
+        "stok_adedi": 0
+    },
+    {
+        "urun_id": 104,
+        "urun_adi": "Telefon",
+        "fiyat": 2500,
+        "stok_adedi": 5
+    },
+    {
+        "urun_id": 105,
+        "urun_adi": "Akilli Saat",
+        "fiyat": 700,
+        "stok_adedi": 14
+    },
+    {
+        "urun_id": 106,
+        "urun_adi": "Kulaklik",
+        "fiyat": 300,
+        "stok_adedi": 25
+    },
+    {
+        "urun_id": 107,
+        "urun_adi": "Powerbank",
+        "fiyat": 150,
+        "stok_adedi": 30
+    },
+    {
+        "urun_id": 108,
+        "urun_adi": "PlayStation",
+        "fiyat": 4000,
+        "stok_adedi": 12
+    },
+    {
+        "urun_id": 109,
+        "urun_adi": "Mouse",
+        "fiyat": 100,
+        "stok_adedi": 50
+    }
+]
