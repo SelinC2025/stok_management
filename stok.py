@@ -186,5 +186,6 @@ class StokYonetimi(QDialog):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = StokYonetimi()
+    window.setWindowTitle("Stok Takip Sistemi")
     window.show()
     sys.exit(app.exec_())
